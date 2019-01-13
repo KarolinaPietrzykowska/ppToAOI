@@ -35,27 +35,36 @@ public class Controller
 	private Button bAOI;
 
 	@FXML
-	private void bKonwertujOnAction(ActionEvent event) throws FileNotFoundException 
+	private void bKonwertujOnAction(ActionEvent event)
 	{
-		model.getPPfromFile(tfPP.getText());
-		model.saveAoiCoordinatesToFile(tfAOI.getText());
-		
-		if(model.getListOfAoiCoordinates().isEmpty() == false)
+		try
 		{
-			Alert alertDone = new Alert(AlertType.INFORMATION, "Współrzędne zostały "
-					+ "przekonwertowane");
-			Stage stage = (Stage) alertDone.getDialogPane().getScene().getWindow();
-			stage.getIcons().add(new Image(PickAndPlaceToAOIConverter.class.getResourceAsStream("/icon1.png")));
-			alertDone.showAndWait();
-		}
+			model.getPPfromFile(tfPP.getText());
+			model.saveAoiCoordinatesToFile(tfAOI.getText());
+
+			if (model.getListOfAoiCoordinates().isEmpty() == false)
+			{
+				Alert alertDone = new Alert(AlertType.INFORMATION, "Współrzędne zostały " + "przekonwertowane");
+				Stage stage = (Stage) alertDone.getDialogPane().getScene().getWindow();
+				stage.getIcons().add(new Image(PickAndPlaceToAOIConverter.class.getResourceAsStream("/icon1.png")));
+				alertDone.showAndWait();
+				model.getListOfAoiCoordinates().clear();
+			}
+
+			else
+			{
+				Alert alertFail = new Alert(AlertType.ERROR, "Błąd przy konwertowaniu " + "współrzędnych");
+				Stage stage = (Stage) alertFail.getDialogPane().getScene().getWindow();
+				stage.getIcons().add(new Image(PickAndPlaceToAOIConverter.class.getResourceAsStream("/icon1.png")));
+				alertFail.showAndWait();
+			}
+		} 
 		
-		else
+		catch (FileNotFoundException e)
 		{
-			Alert alertFail = new Alert(AlertType.ERROR, "Błąd przy konwertowaniu "
-					+ "współrzędnych");
+			Alert alertFail = new Alert(AlertType.ERROR, "Błąd przy konwertowaniu " + "współrzędnych");
 			Stage stage = (Stage) alertFail.getDialogPane().getScene().getWindow();
 			stage.getIcons().add(new Image(PickAndPlaceToAOIConverter.class.getResourceAsStream("/icon1.png")));
-			alertFail.showAndWait();
 			alertFail.showAndWait();
 		}
 	}
@@ -67,14 +76,22 @@ public class Controller
 		fileChooserPP.getExtensionFilters().add(new ExtensionFilter(".txt files", "*.txt"));
 		File file = fileChooserPP.showOpenDialog(null);
 		
-		if(file != null)
+		try
 		{
-			tfPP.setText(file.getAbsolutePath());
+			if (!file.equals(null))
+			{
+				tfPP.setText(file.getAbsolutePath());
+			}
+
+			if (tfPP.getText().equals(null) && tfAOI.getText().equals(null))
+			{
+				bKonwertuj.setDisable(false);
+			}
 		}
 		
-		if(tfPP.getText().equals(null) && tfAOI.getText().equals(null))
+		catch(NullPointerException e)
 		{
-			bKonwertuj.setDisable(false);
+			
 		}
 	}
 
@@ -85,16 +102,22 @@ public class Controller
 		fileChooserAOI.getInitialFileName();
 		fileChooserAOI.getExtensionFilters().add(new ExtensionFilter(".txt files", "*.txt"));
 		File file = fileChooserAOI.showSaveDialog(null);
-		
-		if(file != null)
+
+		try
 		{
-			tfAOI.setText(file.getAbsolutePath());
+			if (!file.equals(null))
+			{
+				tfAOI.setText(file.getAbsolutePath());
+			}
+
+			if (!tfPP.getText().equals(null) && !tfAOI.getText().equals(null))
+			{
+				bKonwertuj.setDisable(false);
+			}
 		}
-		
-		if(tfPP.getText() != null && tfAOI.getText() != null)
+		catch(NullPointerException e)
 		{
-			bKonwertuj.setDisable(false);
+			
 		}
 	}
-	
 }
