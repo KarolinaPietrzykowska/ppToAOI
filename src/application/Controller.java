@@ -45,7 +45,7 @@ public class Controller
 			Alert alertDone = new Alert(AlertType.INFORMATION, "Współrzędne zostały "
 					+ "przekonwertowane");
 			Stage stage = (Stage) alertDone.getDialogPane().getScene().getWindow();
-			stage.getIcons().add(new Image("icon1.png"));
+			stage.getIcons().add(new Image(PickAndPlaceToAOIConverter.class.getResourceAsStream("/icon1.png")));
 			alertDone.showAndWait();
 		}
 		
@@ -54,7 +54,7 @@ public class Controller
 			Alert alertFail = new Alert(AlertType.ERROR, "Błąd przy konwertowaniu "
 					+ "współrzędnych");
 			Stage stage = (Stage) alertFail.getDialogPane().getScene().getWindow();
-			stage.getIcons().add(new Image("icon1.png"));
+			stage.getIcons().add(new Image(PickAndPlaceToAOIConverter.class.getResourceAsStream("/icon1.png")));
 			alertFail.showAndWait();
 			alertFail.showAndWait();
 		}

@@ -22,7 +22,7 @@ public class PickAndPlaceToAOIConverter extends Application
 		Parent root = FXMLLoader.load(getClass().getResource("View.fxml"));
 		primaryStage.setTitle("Konwerter Pick&Place na AOI");
 		primaryStage.setResizable(false);
-		primaryStage.getIcons().add(new Image("icon1.png"));
+		primaryStage.getIcons().add(new Image(PickAndPlaceToAOIConverter.class.getResourceAsStream("/icon1.png")));
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
 	}
